@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A demonstration of a verifiable voting system.">
+  <title>Verifiable Voting Demo</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="container">
+    <header class="page-header">
+      <h1>Verifiable Voting Demo</h1>
+      <p>Team Youth for Change | KR Mangalam University</p>
+    </header>
+
+    <nav class="tabs" aria-label="User roles">
+      <button class="tab active" data-tab="voter">Voter</button>
+      <button class="tab" data-tab="officials">Officials</button>
+      <button class="tab" data-tab="auditor">Auditor</button>
+    </nav>
+
+    <section id="voter" class="tab-panel">
+      <div class="panel">
+        <h2>Cast your vote</h2>
+        <p class="muted">Demo voter IDs: VOTER001 to VOTER005 (each can vote once)</p>
+        <form id="voteForm">
+          <label class="sr-only" for="voterId">Voter ID</label>
+          <input id="voterId" class="voter-input" type="text" placeholder="Enter Voter ID" autocomplete="off" required>
+          <div class="candidate-list">
+            <label class="candidate"><input type="radio" name="candidate" value="Anita Rao" required> Anita Rao</label>
+            <label class="candidate"><input type="radio" name="candidate" value="Vikram Sethi"> Vikram Sethi</label>
+            <label class="candidate"><input type="radio" name="candidate" value="Neha Kapoor"> Neha Kapoor</label>
+          </div>
+          <button class="primary-btn" type="submit">Cast vote</button>
+        </form>
+        <p id="voteMessage" class="message" role="status"></p>
+      </div>
+
+      <div class="panel">
+        <h2>Check your receipt</h2>
+        <form id="receiptForm" class="inline-form">
+          <label class="sr-only" for="receiptCode">Receipt code</label>
+          <input id="receiptCode" type="text" placeholder="Receipt code" required>
+          <button class="outline-btn" type="submit">Check on ledger</button>
+        </form>
+        <p id="receiptMessage" class="message" role="status"></p>
+      </div>
+    </section>
+
+    <section id="officials" class="tab-panel hidden">
+      <div class="panel">
+        <div class="section-heading">
+          <div><h2>Election overview</h2><p class="muted">Live totals from this demo browser</p></div>
+          <button id="refreshOfficials" class="outline-btn">Refresh</button>
+        </div>
+        <div class="stats">
+          <div class="stat"><span class="stat-number" id="totalVotes">0</span><span class="stat-label">Votes recorded</span></div>
+          <div class="stat"><span class="stat-number" id="remainingVotes">5</span><span class="stat-label">Demo IDs remaining</span></div>
+        </div>
+        <h3>Candidate results</h3>
+        <div id="results" class="results"></div>
+      </div>
+      <div class="panel">
+        <h2>Recorded votes</h2>
+        <p class="muted">This demo view hides voter IDs. Receipt hashes are shown for verification.</p>
+        <div class="table-wrap">
+          <table><thead><tr><th>#</th><th>Candidate</th><th>Receipt</th><th>Time</th></tr></thead>
+          <tbody id="officialLedger"><tr><td colspan="4" class="empty">No votes recorded yet.</td></tr></tbody></table>
+        </div>
+      </div>
+    </section>
+
+    <section id="auditor" class="tab-panel hidden">
+      <div class="panel">
+        <h2>Auditor dashboard</h2>
+        <p class="muted">Inspect the demo ledger and verify a receipt code without revealing a voter's ID.</p>
+        <form id="auditForm" class="inline-form">
+          <label class="sr-only" for="auditCode">Receipt code</label>
+          <input id="auditCode" type="text" placeholder="Enter receipt code" required>
+          <button class="primary-btn" type="submit">Verify receipt</button>
+        </form>
+        <p id="auditMessage" class="message" role="status"></p>
+      </div>
+      <div class="panel">
+        <div class="section-heading"><h2>Public ledger</h2><span class="muted" id="ledgerCount">0 records</span></div>
+        <div class="table-wrap">
+          <table><thead><tr><th>#</th><th>Candidate</th><th>Receipt hash</th><th>Timestamp</th></tr></thead>
+          <tbody id="auditLedger"><tr><td colspan="4" class="empty">No ledger entries yet.</td></tr></tbody></table>
+        </div>
+      </div>
+    </section>
+
+    <footer>Educational demonstration only · Data is stored in this browser</footer>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
